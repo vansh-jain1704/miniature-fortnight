@@ -1,0 +1,61 @@
+import React, { useState } from 'react';
+
+function App() {
+  const [counter, setCounter] = useState(0);
+  const [step, setStep] = useState(1);
+
+  return (
+    <div style={{ textAlign: 'center', marginTop: '50px' }}>
+      <h1>Counter Application</h1>
+
+      <div style={{ fontSize: '48px', margin: '20px' }}>
+        {counter}
+      </div>
+
+      <button onClick={() => setCounter(counter + step)}>
+        Increase by {step}
+      </button>
+
+      <button onClick={() => counter >= step && setCounter(counter - step)}>
+        Decrease by {step}
+      </button>
+
+      <button onClick={() => setCounter(0)}>
+        Reset
+      </button>
+
+      <div style={{ marginTop: '20px' }}>
+        <label>
+          Set Increment/Decrement Step:
+          <input
+            type="number"
+            min="1"
+            value={step}
+            onChange={(e) => setStep(Number(e.target.value))}
+            style={{ marginLeft: '10px' }}
+          />
+        </label>
+      </div>
+    </div>
+  );
+
+
+
+
+
+.App { 
+  text-align: center; 
+} 
+button { 
+  margin: 10px; 
+  padding: 10px; 
+  font-size: 16px; 
+  cursor: pointer; 
+} 
+input { 
+  padding: 5px; 
+  font-size: 16px; 
+} 
+}
+
+export default App;
