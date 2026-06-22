@@ -1,0 +1,167 @@
+import React, { useState } from "react";
+
+function TaskForm({ addTask }) {
+  const [name, setName] = useState("");
+  const [date, setDate] = useState("");
+  const [desc, setDesc] = useState("");
+
+  function submit(e) {
+    e.preventDefault();
+
+    if (name && date) {
+      addTask({
+        id: Date.now(),
+        name,
+        dueDate: date,
+        description: desc,
+        completed: false
+      });
+
+      setName("");
+      setDate("");
+      setDesc("");
+    }
+  }
+
+  return (
+    <form onSubmit={submit}>
+      <input
+        type="text"
+        placeholder="Task Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+
+      <input
+        type="date"
+        value={date}
+        onChange={(e) => setDate(e.target.value)}
+      />
+
+      <textarea
+        placeholder="Description"
+        value={desc}
+        onChange={(e) => setDesc(e.target.value)}
+      />
+
+      <button type="submit">Add Task</button>
+    </form>
+  );
+}
+
+export default TaskForm;
+
+
+
+
+
+
+
+
+
+
+import React from "react";
+
+function TaskList({ tasks, setTasks }) {
+
+  const toggle = (id) => {
+    setTasks(
+      tasks.map(t =>
+        t.id === id ? { ...t, completed: !t.completed } : t
+      )
+    );
+  };
+
+  const remove = (id) => {
+    setTasks(tasks.filter(t => t.id !== id));
+  };
+
+  return (
+    <div>
+      {tasks.length === 0 ? (
+        <p>No Tasks</p>
+      ) : (
+        <ul>
+          {tasks.map(t => (
+            <li key={t.id}>
+              <h3>{t.name}</h3>
+              <p>{t.dueDate}</p>
+              <p>{t.description}</p>
+              <p>{t.completed ? "Completed" : "Pending"}</p>
+
+              <button onClick={() => toggle(t.id)}>
+                Toggle
+              </button>
+
+              <button onClick={() => remove(t.id)}>
+                Delete
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+export default TaskList;
+
+
+
+
+
+
+
+
+import React from "react";
+
+function Filter({ setFilter }) {
+  return (
+    <div>
+      <button onClick={() => setFilter("all")}>All</button>
+      <button onClick={() => setFilter("completed")}>Completed</button>
+      <button onClick={() => setFilter("not-completed")}>Pending</button>
+    </div>
+  );
+}
+
+export default Filter;
+
+
+
+
+
+
+
+
+
+import React, { useState } from "react";
+import TaskForm from "./components/TaskForm";
+import TaskList from "./components/TaskList";
+import Filter from "./components/Filter";
+
+function App() {
+  const [tasks, setTasks] = useState([]);
+  const [filter, setFilter] = useState("all");
+
+  const addTask = (task) => setTasks([...tasks, task]);
+
+  const filteredTasks =
+    filter === "completed"
+      ? tasks.filter(t => t.completed)
+      : filter === "not-completed"
+      ? tasks.filter(t => !t.completed)
+      : tasks;
+
+  return (
+    <div>
+      <h1>Task Reminder</h1>
+
+      <TaskForm addTask={addTask} />
+      <Filter setFilter={setFilter} />
+      <TaskList tasks={filteredTasks} setTasks={setTasks} />
+    </div>
+  );
+}
+
+export default App;
