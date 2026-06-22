@@ -1,0 +1,81 @@
+basic 
+import React from "react";
+
+function BasicFigure(props) {
+  return (
+    <div>
+      <img src={props.imageUrl} alt={props.caption} width="200" />
+      <p>{props.caption}</p>
+    </div>
+  );
+}
+
+export default BasicFigure;
+
+
+
+
+
+
+figure
+import React, { useState } from "react";
+import BasicFigure from "./BasicFigure";
+
+function FigureList() {
+  const [figures, setFigures] = useState([
+    { imageUrl: "https://picsum.photos/400", caption: "Image 1" },
+    { imageUrl: "https://picsum.photos/400", caption: "Image 2" }
+  ]);
+
+  function addFigure() {
+    setFigures([
+      ...figures,
+      {
+        imageUrl: "https://picsum.photos/400",
+        caption: `Image ${figures.length + 1}`
+      }
+    ]);
+  }
+
+  function removeFigure() {
+    setFigures(figures.slice(0, -1));
+  }
+
+  return (
+    <div>
+      <button onClick={addFigure}>Add Image</button>
+      <button onClick={removeFigure}>Remove Image</button>
+
+      {figures.map((f, i) => (
+        <BasicFigure
+          key={i}
+          imageUrl={f.imageUrl}
+          caption={f.caption}
+        />
+      ))}
+    </div>
+  );
+}
+
+export default FigureList;
+
+
+
+
+
+
+
+
+import React from "react";
+import FigureList from "./components/FigureList";
+
+function App() {
+  return (
+    <div>
+      <h1>Dynamic Image Gallery</h1>
+      <FigureList />
+    </div>
+  );
+}
+
+export default App;
