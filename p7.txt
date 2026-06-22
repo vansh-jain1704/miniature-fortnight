@@ -1,0 +1,45 @@
+import React, { useState } from "react";
+
+function ProfileCard({ name, bio, profilePicture }) {
+  const [color, setColor] = useState("#f0f0f0");
+
+  return (
+    <div
+      style={{ backgroundColor: color }}
+      onMouseEnter={() => setColor("#d1c4e9")}
+      onMouseLeave={() => setColor("#f0f0f0")}
+    >
+      <img src={profilePicture} alt={name} width="150" />
+
+      <h2>{name}</h2>
+      <p>{bio}</p>
+    </div>
+  );
+}
+
+export default ProfileCard;
+
+
+
+
+
+
+
+import React from "react";
+import ProfileCard from "./ProfileCard";
+
+function App() {
+  return (
+    <div>
+      <ProfileCard
+        name="vtucircle"
+        bio="VTU notes, syllabus and previous year papers.previous 
+year papers of 2021 | 2022 scheme for BE students. "
+        profilePicture="https://vtucircle.com/wp-content/uploads/2024/11/cropped-vtucircle_icon-1.png"
+      />
+    </div>
+  );
+}
+
+export default App;
+
