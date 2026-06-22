@@ -1,0 +1,92 @@
+import React, { useState } from "react";
+
+function Form() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [show, setShow] = useState(false);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    if (!name) {
+      alert("Enter Name");
+      return;
+    }
+
+    if (!email.includes("@")) {
+      alert("Enter Valid Email");
+      return;
+    }
+
+    if (password.length < 6) {
+      alert("Password must be 6 characters");
+      return;
+    }
+
+    alert("Form Submitted");
+    setName("");
+    setEmail("");
+    setPassword("");
+  }
+
+  return (
+    <div>
+      <h2>Registration Form</h2>
+
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Enter Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <br /><br />
+
+        <input
+          type="email"
+          placeholder="Enter Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <br /><br />
+
+        <input
+          type={show ? "text" : "password"}
+          placeholder="Enter Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <br /><br />
+
+        <input
+          type="checkbox"
+          onChange={() => setShow(!show)}
+        />
+        Show Password
+
+        <br /><br />
+
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  );
+
+
+
+
+import React from "react";
+import Form from "./components/Form";
+
+function App() {
+  return (
+    <div>
+      <Form />
+    </div>
+  );
+}
+
+export default App;
+}
+
+export default Form;
